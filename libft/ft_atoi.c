@@ -6,17 +6,28 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 03:43:14 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/03/04 21:35:04 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/24 04:13:04 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
+
+void	check_err(int a, unsigned long r)
+{
+	if (a < 0)
+	{
+		if (r > 2147483648)
+			_error();
+	}
+	else if (r > 2147483647)
+		_error();
+}
 
 int	ft_atoi(const char *str)
 {
-	int	a;
+	int				a;
 	unsigned long	r;
-	int	k;
+	int				k;
 
 	k = 0;
 	a = 1;
@@ -34,12 +45,5 @@ int	ft_atoi(const char *str)
 		r = r * 10 + *str++ - 48;
 		k++;
 	}
-	if (a < 0)
-	{
-		if (r > 2147483648)
-			_error();
-	}
-	else if (r > 2147483647)
-		_error();
 	return (a * r);
 }

@@ -6,11 +6,11 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 20:45:22 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/02/14 20:45:28 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/24 03:09:58 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
 static int	count_strs(char *str, char c)
 {

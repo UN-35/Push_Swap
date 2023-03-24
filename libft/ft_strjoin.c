@@ -6,11 +6,11 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 02:19:47 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/02/05 15:09:15 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/24 03:10:08 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

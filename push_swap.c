@@ -6,179 +6,37 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 00:58:21 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/03/20 13:43:49 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:31:36 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void	_error(void)
+int is_sorted(t_list *stack)
 {
-	write (1, "Error\n", 6);
-	exit (1);
-}
+	t_list *tmp = stack;
 
-int ft_str_is_digit(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
+	while (tmp && tmp->next)
 	{
-		if (ft_isdigit(str[i]))
+		if (tmp->data > tmp->next->data)
 			return (1);
-		i++;
+		tmp = tmp->next;
 	}
-	return (0);
+	return(0);
 }
-
-char *join_all(char **av)
+int	get_index(t_list **stack, int rank)
 {
-	char *tmp;
-	char *ptr;
-	char *str=  NULL;
-	int i = 1;
-	while (av[i])
-	{
-		if (!av[i][0])
-			_error();
-		tmp = ft_strjoin(av[i] , " ");
-		if (!str)
-			str = ft_strdup(" ");
-		ptr = str;
-		str = ft_strjoin (ptr, tmp);
-		free(tmp);
-		free(ptr);
-		i++;
-	}
-	return (str);
-}
-
-int _match(char **args)
-{
+	t_list *tmp = *stack;
 	int i = 0;
-	int j = 1;
-	while (args[i] && i < j)
+	while (tmp)
 	{
-		j = i + 1;
-		while (args[j])
-		{
-			if (ft_atoi(args[i]) == ft_atoi(args[j]))
-				return (1);
-			j++;
-		}
+		if (tmp->rank == rank)
+			return (i);
+		tmp = tmp->next;
 		i++;
 	}
-	i = 0;
-	return (0);
+	return (-1);
 }
-
-int	_valid_args(char **args)
-{
-	int i = 0;
-	int j = 1;
-	long k = ft_atoi(args[0]);
-	if (k > INT_MAX || k < INT_MIN)
-		_error();
-	while (args[i])
-	{
-		j = 0;
-		if (!args[i][0])
-			_error();
-		if (*args[i] == '+' || *args[i] == '-')
-		{
-			j = 1;
-			if (!args[i][j])
-				_error();
-		}
-		if (ft_str_is_digit(args[i] + j) == 1)
-			_error();
-		i++;
-	}
-	if (_match(args))
-		_error();
-	return (0);
-}
-
-
-
-///////////////////////////////commands///////////////////////////////
-
-////// swap swap
-
-void	ss(t_list *stack_a, t_list *stack_b)
-{
-	int	tmp;
-
-	if (stack_a->next)
-	{
-		tmp = stack_a->data;
-		stack_a->data = stack_a->next->data;
-		stack_a->next->data = tmp;
-	}
-	tmp = 0;
-	if (stack_b->next)
-	{
-		tmp = stack_b->data;
-		stack_b->data = stack_b->next->data;
-		stack_b->next->data = tmp;
-	}
-}
-
-
-//////////reverse rotation//////
-
-void rra(t_list **stack_a)
-{
-	t_list *tmp;
-
-	if (!(*stack_a)->next)
-		return ;
-	tmp = ft_lastnode(*stack_a);
-	ft_prelast_node(*stack_a)->next = NULL;
-	tmp->next = *stack_a;
-	*stack_a = tmp;
-}
-
-void rrb(t_list **stack_b)
-{
-	t_list *tmp;
-
-	if (!(*stack_b)->next)
-		return ;
-	tmp = ft_lastnode(*stack_b);
-	ft_prelast_node(*stack_b)->next = NULL;
-	tmp->next = *stack_b;
-	*stack_b = tmp;
-}
-
-//////////rotation///////
-
-void	ra(t_list **stack_a)
-{
-	t_list	*tmp;
-
-	if (!(*stack_a) || !(*stack_a)->next)
-		return ;
-	tmp = (*stack_a)->next;
-	(*stack_a)->next = NULL;
-	ft_lastnode(tmp)->next = *stack_a;
-	*stack_a = tmp;
-}
-
-void	rb(t_list **stack_b)
-{
-	t_list	*tmp;
-
-	if (!(*stack_b) || !(*stack_b)->next)
-		return ;
-	tmp = (*stack_b)->next;
-	(*stack_b)->next = NULL;
-	ft_lastnode(tmp)->next = *stack_b;
-	*stack_b = tmp;
-}
-
-
 
 ////////////////// sort 3 numbers ////////////////////
 
@@ -186,53 +44,27 @@ void	rb(t_list **stack_b)
 void sort_three(t_list *stack)
 {
 	if (stack->data > stack->next->data && stack->next->next->data > stack->next->data && stack->next->next->data > stack->data)
-	{
 		sa(stack);
-		// write(1, "sa\n", 3);
-	}
 	else if (stack->data > stack->next->next->data && stack->next->data > stack->next->next->data && stack->next->data > stack->data)
-	{
 		rra(&stack);
-		// write(1, "rra\n", 4);
-	}
 	else if (stack->data > stack->next->data && stack->data > stack->next->next->data && stack->next->next->data > stack->next->data)
-	{
 		ra(&stack);
-		// write(1, "ra\n", 3);
-	}
 	else if (stack->data > stack->next->data && stack->data > stack->next->next->data && stack->next->data > stack->next->next->data)
 	{
 		sa(stack);
 		rra(&stack);
-		// write(1, "sa\nrra\n", 8);
 	}
 	else if (stack->next->data > stack->data && stack->next->next->data > stack->data && stack->next->data > stack->next->next->data)
 	{
 		sa(stack);
 		ra(&stack);
-		// write(1, "sa\nra\n", 7);
 	}
 }
+
 
 ////////////////////// sort 5 numbers ////////////////
-
-int get_the_smallest(t_list *stack)
-{
-	int min;
-	min = stack->data;
-
-	while(stack)
-	{
-		if (stack->data < min)
-			min = stack->data;
-		stack = stack->next;
-	}
-	return (min);
-}
-
 void sort_five(t_list **stack_a, t_list **stack_b)
 {
-	// int i = 0;
 	int k;
 
 	while (*stack_a && stack_len(*stack_a) > 3)
@@ -241,22 +73,148 @@ void sort_five(t_list **stack_a, t_list **stack_b)
 		while ((*stack_a)->data != k)
 			ra(stack_a);
 		pb(stack_b, stack_a);
-		// (*stack_a)->data = (*stack_a)->next->data;
 	}
 	sort_three(*stack_a);
-	// while (*stack_b)
-	// {
-	// 	// write(1, "hna\n", 4);
-	// 	pa(stack_a, stack_b);
-	// }
+	while (*stack_b)
+		pa(stack_a, stack_b);
+}
+
+void	rr(t_list **stack_a, t_list **stack_b)
+{
+	t_list	*tmp;
+	t_list	*tmp2;
+
+	if (!(*stack_a) || !(*stack_a)->next || !(*stack_b) || !(*stack_b)->next)
+		return ;
+	tmp = (*stack_a)->next;
+	(*stack_a)->next = NULL;
+	ft_lastnode(tmp)->next = *stack_a;
+	*stack_a = tmp;
+
+	tmp2 = (*stack_b)->next;
+	(*stack_b)->next = NULL;
+	ft_lastnode(tmp2)->next = *stack_b;
+	*stack_b = tmp2;
+	write(1, "rr\n", 3);
 }
 
 
+
+void	push_chunks_b(t_list **stack_a, t_list **stack_b)
+{
+	int size = stack_len(*stack_a);
+	int start = (size / 2) - 10;
+	int end = (size / 2) + 10;
+	int i = 0;
+
+	while (*stack_a && i < size)
+	{
+		while (*stack_a && _still(*stack_a, start, end) == 1)
+		{
+			if ((*stack_a)->rank >= start && (*stack_a)->rank <= end)
+			{
+				pb(stack_b, stack_a);
+				if ((*stack_b)->rank < size / 2)
+					rb(stack_b);
+			}
+			else
+				ra(stack_a);
+		}
+		start -= 10;
+		end += 10;
+		i++;
+	}
+}
+
+void	push_big_chunks_b(t_list **stack_a, t_list **stack_b)
+{
+	int size = stack_len(*stack_a);
+	int start = (size / 2) - 29;
+	int end = (size / 2) + 29;
+	int i = 0;
+
+	while (*stack_a && i < size)
+	{
+		while (*stack_a && _still(*stack_a, start, end) == 1)
+		{
+			if ((*stack_a)->rank >= start && (*stack_a)->rank <= end)
+			{
+				pb(stack_b, stack_a);
+				if ((*stack_b)->rank < size / 2)
+					rb(stack_b);
+			}
+			else
+				ra(stack_a);
+		}
+		start -= 29;
+		end += 29;
+		i++;
+	}
+}
+
+
+
+void	push_max(t_list **stack_a, t_list **stack_b, int size)
+{
+	t_list *tmp = *stack_b;
+	int i = 0;
+
+	while (tmp)
+	{
+		if (tmp->rank == size)
+			break;
+		i++;
+		tmp = tmp->next;
+	}
+	tmp = *stack_b;
+	if (i  > size / 2)
+	{
+		while ((*stack_b)->rank != size)
+			rrb(stack_b);
+	}
+	else
+	{
+		while ((*stack_b)->rank != size)
+			rb(stack_b);
+	}
+	pa(stack_a, stack_b);
+}
+
+
+void	repush_to_a(t_list **stack_a, t_list **stack_b, int size)
+{
+	t_list	*last_a;
+	push_max(stack_a, stack_b, size);
+	int j = size;
+	size--;
+	while (*stack_b || is_sorted(*stack_a))
+	{
+		last_a = ft_lastnode(*stack_a);
+		if ((last_a->rank + 1) == (*stack_a)->rank)
+			rra(stack_a);
+		else if (*stack_b && ((*stack_b)->rank + 1) == (*stack_a)->rank)
+		{
+			pa(stack_a, stack_b);
+			size--;
+		}
+		else if (*stack_b && (last_a->rank == j - 1 || last_a->rank < (*stack_b)->rank))
+		{
+			pa(stack_a, stack_b);
+			size--;
+			ra(stack_a);
+		}
+		else if (*stack_b && get_index(stack_b, (*stack_a)->rank - 1) >= size / 2)
+			rrb(stack_b);
+		else if (*stack_b && get_index(stack_b, (*stack_a)->rank - 1) < size / 2)
+			rb(stack_b);
+	}
+}
 
 int main(int ac, char **av)
 {
 	char *string;
 	char **args;
+	(void)ac;
 	if (ac < 2)
 		return(0);
 	string = join_all(av);
@@ -266,17 +224,24 @@ int main(int ac, char **av)
 	t_list *stack_a = NULL;
 	t_list *stack_b = NULL;
 	int i = 0;
+	int size;
 	while (args[i])
 	{
 		ft_add_back(&stack_a, ft_lstnew(args[i]));
 		i++;
 	}
-	pb(&stack_b, &stack_a);
-	pb(&stack_b, &stack_a);
-	ss(stack_a, stack_b);
-	printf ("head of stack_A : %d\n", stack_a->data);
-	printf ("next of stack_A : %d\n", stack_a->next->data);
-	printf ("\n\nhead of stack_B : %d\n", stack_b->data);
-	printf ("next of stack_B : %d\n", stack_b->next->data);
-	
+	size = stack_len(stack_a);
+	set_rank(&stack_a, size);
+	if (size <= 100)
+		push_chunks_b(&stack_a, &stack_b);
+	else
+		push_big_chunks_b(&stack_a, &stack_b);
+	repush_to_a(&stack_a, &stack_b, size);
+	// pb (&stack_b, &stack_a);
+	// pb (&stack_b, &stack_a);
+	// // rr(&stack_a, &stack_b);
+	// printf("A: %d\n", stack_a->data);
+	// printf("A: %d\n", stack_a->next->data);
+	// printf("B: %d\n", stack_b->data);
+	// printf("B: %d\n", stack_b->next->data);
 }

@@ -6,11 +6,11 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 12:46:55 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/03/20 12:47:18 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/24 03:14:59 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../header.h"
 
 t_list	*ft_prelast_node(t_list *lst)
 {
@@ -30,7 +30,9 @@ t_list	*ft_lastnode(t_list *lst)
 
 int	stack_len(t_list *stack)
 {
-	int j = 0;
+	int	j;
+
+	j = 0;
 	while (stack)
 	{
 		stack = stack->next;
@@ -38,7 +40,6 @@ int	stack_len(t_list *stack)
 	}
 	return (j);
 }
-
 
 t_list	*ft_lstnew(char *str)
 {
@@ -48,6 +49,7 @@ t_list	*ft_lstnew(char *str)
 	if (!new)
 		return (NULL);
 	new->data = ft_atoi(str);
+	new->rank = 0;
 	new->next = NULL;
 	return (new);
 }
