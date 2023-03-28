@@ -6,7 +6,7 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 04:42:53 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/03/24 14:56:58 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/28 23:29:16 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,9 @@ int	_valid_args(char **args)
 {
 	int		i;
 	int		j;
-	long	k;
 
 	i = 0;
 	j = 1;
-	k = ft_atoi(args[0]);
-	if (k > INT_MAX || k < INT_MIN)
-		_error();
 	while (args[i])
 	{
 		j = 0;

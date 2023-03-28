@@ -6,7 +6,7 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 01:23:02 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/03/25 18:22:25 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/28 23:52:19 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,12 @@ void	push_chunks_b(t_list **stack_a, t_list **stack_b)
 	end = (size / 2) + 15;
 	while (*stack_a)
 	{
-		while (*stack_a && _still(*stack_a, start, end) == 1)
+		while (*stack_a && _still(*stack_a, start, end) != -1)
 		{
 			if ((*stack_a)->rank >= start && (*stack_a)->rank <= end)
 			{
 				pb(stack_b, stack_a);
-				if ((*stack_b)->rank < size / 2)
+				if (((*stack_b)->rank < size / 2))
 					rb(stack_b);
 			}
 			else
@@ -101,12 +101,12 @@ void	push_big_chunks_b(t_list **stack_a, t_list **stack_b)
 	end = (size / 2) + 29;
 	while (*stack_a)
 	{
-		while (*stack_a && _still(*stack_a, start, end) == 1)
+		while (*stack_a && _still(*stack_a, start, end) != -1)
 		{
 			if ((*stack_a)->rank >= start && (*stack_a)->rank <= end)
 			{
 				pb(stack_b, stack_a);
-				if ((*stack_b)->rank < size / 2)
+				if (((*stack_b)->rank < size / 2))
 					rb(stack_b);
 			}
 			else
@@ -119,36 +119,31 @@ void	push_big_chunks_b(t_list **stack_a, t_list **stack_b)
 
 /*.....push back from b to a.....*/
 
-void	repush_to_a(t_list **stack_a, t_list **stack_b, int size)
+void	repush_to_a(t_list **a, t_list **b, int size, int j)
 {
 	t_list	*last_a;
-	int		j;
 
-	push_max(stack_a, stack_b, size);
-	j = size;
+	push_max(a, b, size);
 	size--;
-	while (*stack_b || is_sorted(*stack_a))
+	while (*b || is_sorted(*a))
 	{
-		last_a = ft_lastnode(*stack_a);
-		if ((last_a->rank + 1) == (*stack_a)->rank)
-			rra(stack_a);
-		else if (*stack_b && ((*stack_b)->rank + 1) == (*stack_a)->rank)
+		last_a = ft_lastnode(*a);
+		if ((last_a->rank + 1) == (*a)->rank)
+			rra(a);
+		else if (*b && ((*b)->rank + 1) == (*a)->rank)
 		{
-			pa(stack_a, stack_b);
+			pa(a, b);
 			size--;
 		}
-		else if (*stack_b
-			&& (last_a->rank == j - 1 || last_a->rank < (*stack_b)->rank))
+		else if (*b && (last_a->rank == j - 1 || last_a->rank < (*b)->rank))
 		{
-			pa(stack_a, stack_b);
+			pa(a, b);
 			size--;
-			ra(stack_a);
+			ra(a);
 		}
-		else if (*stack_b
-			&& get_index(stack_b, (*stack_a)->rank - 1) >= size / 2)
-			rrb(stack_b);
-		else if (*stack_b
-			&& get_index(stack_b, (*stack_a)->rank - 1) < size / 2)
-			rb(stack_b);
+		else if (*b && get_index(b, (*a)->rank - 1) >= size / 2)
+			rrb(b);
+		else if (*b && get_index(b, (*a)->rank - 1) < size / 2)
+			rb(b);
 	}
 }

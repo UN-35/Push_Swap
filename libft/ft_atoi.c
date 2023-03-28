@@ -6,7 +6,7 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/17 03:43:14 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/03/24 04:13:04 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/28 23:27:56 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ int	ft_atoi(const char *str)
 		r = r * 10 + *str++ - 48;
 		k++;
 	}
+	check_err(a, r);
 	return (a * r);
 }

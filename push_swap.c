@@ -6,57 +6,21 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 00:58:21 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/03/25 18:19:58 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/28 23:51:15 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-// void	rr(t_list **stack_a, t_list **stack_b)
-// {
-// 	t_list	*tmp;
-// 	t_list	*tmp2;
-
-// 	if (!(*stack_a) || !(*stack_a)->next || !(*stack_b) || !(*stack_b)->next)
-// 		return ;
-// 	tmp = (*stack_a)->next;
-// 	(*stack_a)->next = NULL;
-// 	ft_lastnode(tmp)->next = *stack_a;
-// 	*stack_a = tmp;
-
-// 	tmp2 = (*stack_b)->next;
-// 	(*stack_b)->next = NULL;
-// 	ft_lastnode(tmp2)->next = *stack_b;
-// 	*stack_b = tmp2;
-// 	write(1, "rr\n", 3);
-// }
-
-int main(int ac, char **av)
+void	_sort(t_list *stack_a, t_list *stack_b)
 {
-	char	*string;
-	char	**args;
+	int	size;
 
-	if (ac <= 2)
-		return(0);
-	string = join_all(av);
-	args = ft_split(string , ' ');
-	if (_valid_args(args))
-		exit (1);
-	t_list *stack_a = NULL;
-	t_list *stack_b = NULL;
-	int i = 0;
-	int size;
-	while (args[i])
-	{
-		ft_add_back(&stack_a, ft_lstnew(args[i]));
-		i++;
-	}
 	size = stack_len(stack_a);
-	set_rank(&stack_a, size);
 	if (size == 2)
 	{
 		if (!is_sorted(stack_a))
-			return (0);
+			return ;
 		sa(stack_a);
 	}
 	else if (size <= 5)
@@ -64,11 +28,36 @@ int main(int ac, char **av)
 	else if (size <= 100)
 	{
 		push_chunks_b(&stack_a, &stack_b);
-		repush_to_a(&stack_a, &stack_b, size);
+		repush_to_a(&stack_a, &stack_b, size, size);
 	}
 	else
 	{
 		push_big_chunks_b(&stack_a, &stack_b);
-		repush_to_a(&stack_a, &stack_b, size);
+		repush_to_a(&stack_a, &stack_b, size, size);
 	}
+}
+
+int	main(int ac, char **av)
+{
+	int		i;
+	char	*string;
+	char	**args;
+	t_list	*stack_a;
+	t_list	*stack_b;
+
+	string = join_all(av);
+	args = ft_split(string, ' ');
+	if (ac < 2 || (ac == 2 && !_valid_args(args)))
+		return (0);
+	_valid_args(args);
+	stack_a = NULL;
+	stack_b = NULL;
+	i = 0;
+	while (args[i])
+	{
+		ft_add_back(&stack_a, ft_lstnew(args[i]));
+		i++;
+	}
+	set_rank(&stack_a);
+	_sort(stack_a, stack_b);
 }

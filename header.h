@@ -6,7 +6,7 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 02:06:27 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/03/25 01:29:31 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/28 23:52:05 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@
 # include <stdlib.h>
 # include <stdio.h>
 
+/*....................*/
 typedef struct s_list
 {
-	int data;
-	int	rank;
+	int				data;
+	int				rank;
 	struct s_list	*next;
-} t_list;
+}	t_list;
+
 /*......libft_funcs....*/
 void	_error(void);
 int		ft_isdigit(int c);
@@ -43,7 +45,7 @@ void	ft_add_back(t_list **lst, t_list *node);
 /*.........utils........*/
 int		get_the_biggest(t_list *stack);
 int		get_the_smallest(t_list *stack);
-void	set_rank(t_list **stack_a, int size);
+void	set_rank(t_list **stack_a);
 int		_still(t_list *stack_a, int start, int end);
 int		found_bigrank(t_list *stack_b, int bigrank);
 //more:
@@ -59,11 +61,11 @@ int		_valid_args(char **args);
 int		ft_str_is_digit(char *str);
 
 /*......main_sort......*/
-void    sort_three(t_list *stack);
-void    sort_five(t_list **stack_a, t_list **stack_b);
+void	sort_three(t_list *stack);
+void	sort_five(t_list **stack_a, t_list **stack_b);
 void	push_chunks_b(t_list **stack_a, t_list **stack_b);
 void	push_big_chunks_b(t_list **stack_a, t_list **stack_b);
-void	repush_to_a(t_list **stack_a, t_list **stack_b, int size);
+void	repush_to_a(t_list **stack_a, t_list **stack_b, int size, int j);
 
 /*.........CMDs.........*/
 /*  swap  */
@@ -79,6 +81,6 @@ void	ra(t_list **stack_a);
 void	rb(t_list **stack_b);
 void	rra(t_list **stack_a);
 void	rrb(t_list **stack_b);
-
+void	rr(t_list **stack_a, t_list **stack_b);
 
 #endif

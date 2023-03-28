@@ -6,7 +6,7 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 14:40:28 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/03/24 14:49:01 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/28 22:41:09 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ int	get_the_biggest(t_list *stack)
 	return (max);
 }
 
-void	set_rank(t_list **stack_a, int size)
+void	set_rank(t_list **stack_a)
 {
 	int		j;
+	int		size;
 	t_list	*tmp;
 
+	size = stack_len(*stack_a);
 	j = get_the_biggest(*stack_a);
 	tmp = *stack_a;
 	while (size > 0)
@@ -63,13 +65,17 @@ void	set_rank(t_list **stack_a, int size)
 
 int	_still(t_list *stack_a, int start, int end)
 {
+	int	i;
+
+	i = 0;
 	while (stack_a)
 	{
 		if (stack_a->rank >= start && stack_a->rank <= end)
-			return (1);
+			return (i);
+		i++;
 		stack_a = stack_a->next;
 	}
-	return (0);
+	return (-1);
 }
 
 int	found_bigrank(t_list *stack_b, int bigrank)
