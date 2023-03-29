@@ -6,7 +6,7 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 04:42:53 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/03/28 23:29:16 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/29 03:44:44 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,9 @@ int	_valid_args(char **args)
 	int		i;
 	int		j;
 
+	if (!args)
+		return (1);
 	i = 0;
-	j = 1;
 	while (args[i])
 	{
 		j = 0;
@@ -101,7 +102,7 @@ int	_valid_args(char **args)
 			_error();
 		i++;
 	}
-	if (_match(args))
+	if (_match(args) || !args[0])
 		_error();
 	return (0);
 }

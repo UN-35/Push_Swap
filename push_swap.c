@@ -6,7 +6,7 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 00:58:21 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/03/28 23:51:15 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/29 03:45:24 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ void	_sort(t_list *stack_a, t_list *stack_b)
 	int	size;
 
 	size = stack_len(stack_a);
+	if (!is_sorted(stack_a))
+		return ;
 	if (size == 2)
-	{
-		if (!is_sorted(stack_a))
-			return ;
 		sa(stack_a);
-	}
 	else if (size <= 5)
 		sort_five(&stack_a, &stack_b);
 	else if (size <= 100)
@@ -45,11 +43,11 @@ int	main(int ac, char **av)
 	t_list	*stack_a;
 	t_list	*stack_b;
 
+	(void)ac;
 	string = join_all(av);
 	args = ft_split(string, ' ');
-	if (ac < 2 || (ac == 2 && !_valid_args(args)))
+	if (_valid_args(args))
 		return (0);
-	_valid_args(args);
 	stack_a = NULL;
 	stack_b = NULL;
 	i = 0;
