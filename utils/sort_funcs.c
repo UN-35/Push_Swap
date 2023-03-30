@@ -6,7 +6,7 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/25 01:23:02 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/03/28 23:52:19 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/29 22:04:37 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,19 @@ void	sort_three(t_list *stack)
 void	sort_five(t_list **stack_a, t_list **stack_b)
 {
 	int	k;
+	int	size;
 
+	size = stack_len(*stack_a);
 	while (*stack_a && stack_len(*stack_a) > 3)
 	{
 		k = get_the_smallest(*stack_a);
 		while ((*stack_a)->data != k)
-			ra(stack_a);
+		{
+			if ((*stack_a)->rank <= size / 2)
+				ra(stack_a);
+			else
+				rra(stack_a);
+		}
 		pb(stack_b, stack_a);
 	}
 	sort_three(*stack_a);
