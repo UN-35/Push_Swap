@@ -6,7 +6,7 @@
 /*   By: yoelansa <yoelansa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 14:40:28 by yoelansa          #+#    #+#             */
-/*   Updated: 2023/03/28 22:41:09 by yoelansa         ###   ########.fr       */
+/*   Updated: 2023/03/31 16:33:18 by yoelansa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,25 @@
 
 int	get_the_smallest(t_list *stack)
 {
-	int	min;
+	int		min;
+	t_list	*tmp;
 
 	min = stack->data;
-	while (stack)
+	tmp = stack;
+	while (tmp)
 	{
-		if (stack->data < min)
-			min = stack->data;
-		stack = stack->next;
+		if (tmp->data < min)
+			min = tmp->data;
+		tmp = tmp->next;
 	}
-	return (min);
+	tmp = stack;
+	while (tmp)
+	{
+		if (tmp->data == min)
+			return (tmp->rank);
+		tmp = tmp->next;
+	}
+	return (-1);
 }
 
 int	get_the_biggest(t_list *stack)
